@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 
   ros::NodeHandle n;
   ros::Subscriber scan_sub = n.subscribe("/scan", 1, scanCallback);
-  pub_door = n.advertise<std_msgs::String> ("/door/is_open", 1);
+  pub_door = n.advertise<std_msgs::String> ("status", 1);
   ros::spin();
   
   return 0;
