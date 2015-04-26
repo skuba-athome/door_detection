@@ -12,7 +12,7 @@ void scanCallback(const sensor_msgs::LaserScanConstPtr &scan){
   for(unsigned int n = center_index-10; n <= center_index+10;n++)
   {
   	float laser_range = scan->ranges[n];
-  	if(laser_range == 0.0f) laser_range = scan->range_max;
+  	if(laser_range <= 0.005f) laser_range = scan->range_max;
   	sum += laser_range*cos((n-center_index)*scan->angle_increment);
   	k++;
   }
@@ -26,7 +26,7 @@ void scanCallback(const sensor_msgs::LaserScanConstPtr &scan){
   if(count>60) door_isopen.data = "open";
   else door_isopen.data = "close";
   
-  ROS_INFO("distance %f,%s",distance,door_isopen.data.c_str());
+  ROS_INFO("distance %f,%s, %d",distance,door_isopen.data.c_str(), k);
   
   pub_door.publish(door_isopen);  
 }
